@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## v2.5.0 (19-11-2025)
+
+**Added:**
+- Added a new cancelable `RcbSaveChatHistoryEvent` which is emitted when chat messages are saved to history
+
+**Fixed:**
+- Fixed an issue where chat history messages may be stale
+
 ## v2.4.1 (18-10-2025)
 
 **Fixed:**
