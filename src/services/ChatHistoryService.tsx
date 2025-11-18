@@ -27,9 +27,8 @@ const saveChatHistory = async (messages: Message[]) => {
 	}
 	
 	const messagesToSave: Message[] = [];
-	const offset = historyLoaded ? historyMessages.length : 0;
 
-	for (let i = messages.length - 1; i >= offset; i--) {
+	for (let i = messages.length - 1; i >= 0; i--) {
 		const message = messages[i];
 
 		// skip past system messages
@@ -47,7 +46,7 @@ const saveChatHistory = async (messages: Message[]) => {
 	}
 
 	let parsedMessages: Message[] = messagesToSave.map(parseMessageToString);
-	if (parsedMessages.length < historyMaxEntries) {
+	if (!historyLoaded && parsedMessages.length < historyMaxEntries) {
 		const difference = historyMaxEntries - parsedMessages.length;
 		parsedMessages = [...historyMessages.slice(-difference), ...parsedMessages]
 	}

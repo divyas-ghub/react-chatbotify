@@ -6,6 +6,7 @@ import { useMessagesContext } from "../../../src/context/MessagesContext";
 import { useBotStatesContext } from "../../../src/context/BotStatesContext";
 import { useBotRefsContext } from "../../../src/context/BotRefsContext";
 import { useDispatchRcbEventInternal } from "../../../src/hooks/internal/useDispatchRcbEventInternal";
+import { getHistoryMessages, setHistoryMessages } from "../../../src/services/ChatHistoryService";
 import { Message } from "../../../src/types/Message";
 
 jest.mock("../../../src/context/SettingsContext");
@@ -28,6 +29,8 @@ describe("useMessagesInternal", () => {
 	const mockSyncedIsChatWindowOpenRef = { current: false };
 	const mockSyncedNotificationsToggledOnRef = { current: false };
 	const mockChatBodyRef = { current: null };
+	const mockGetHistoryMessages = jest.fn();
+	const mockSetHistoryMessages = jest.fn();
 
 	beforeEach(() => {
 		jest.clearAllMocks();
@@ -64,6 +67,9 @@ describe("useMessagesInternal", () => {
 		(useDispatchRcbEventInternal as jest.Mock).mockReturnValue({
 			dispatchRcbEvent: mockCallRcbEvent,
 		});
+
+		(getHistoryMessages as jest.Mock).mockImplementation(mockGetHistoryMessages);
+		(setHistoryMessages as jest.Mock).mockImplementation(mockSetHistoryMessages);
 	});
 
 	it("should return expected functions and values", () => {
@@ -115,6 +121,36 @@ describe("useMessagesInternal", () => {
 
 		expect(setSyncedMessagesMock).toHaveBeenCalledWith(expect.any(Function));
 		expect(mockSetUnreadCount).toHaveBeenCalledWith(expect.any(Function));
+	});
+
+	it("should remove a message from chat history when not present in current messages", async () => {
+		const mockMessageId = "history-id";
+		const historyMessage: Message = {
+			id: mockMessageId,
+			content: "History",
+			sender: "BOT",
+			type: "text",
+			timestamp: String(Date.now()),
+			tags: [],
+		};
+
+		mockGetHistoryMessages.mockReturnValue([historyMessage]);
+
+		(useMessagesContext as jest.Mock).mockReturnValue({
+			messages: [],
+			setSyncedMessages: setSyncedMessagesMock,
+			syncedMessagesRef: { current: [] },
+		});
+
+		const { result } = renderHook(() => useMessagesInternal());
+
+		await act(async () => {
+			const removed = await result.current.removeMessage(mockMessageId);
+			expect(removed).toBe(historyMessage);
+		});
+
+		expect(setSyncedMessagesMock).not.toHaveBeenCalled();
+		expect(mockSetHistoryMessages).toHaveBeenCalledWith([]);
 	});
 
 	it("should stream a message correctly", async () => {

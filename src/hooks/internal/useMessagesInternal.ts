@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { saveChatHistory } from "../../services/ChatHistoryService";
+import { getHistoryMessages, saveChatHistory, setHistoryMessages } from "../../services/ChatHistoryService";
 import { createMessage } from "../../utils/messageBuilder";
 import { useSettingsContext } from "../../context/SettingsContext";
 import { useMessagesContext } from "../../context/MessagesContext";
@@ -270,9 +270,20 @@ export const useMessagesInternal = () => {
 	 * @param messageId id of message to remove
 	 */
 	const removeMessage = useCallback(async (messageId: string): Promise<Message | null> => {
-		const message = syncedMessagesRef.current.find((m) => m.id === messageId);
+		let message = syncedMessagesRef.current.find((m) => m.id === messageId);
+		let historyMessages: Message[] | null = null;
+		let isHistoryMessage = false;
 
-		// nothing to remove if no such message
+		// if not found in current messages, check in history messages
+		if (!message) {
+			historyMessages = getHistoryMessages();
+			message = historyMessages.find((m) => m.id === messageId);
+			if (message) {
+				isHistoryMessage = true;
+			}
+		}
+
+		// nothing to remove if no such message at all
 		if (!message) {
 			return null;
 		}
@@ -285,6 +296,14 @@ export const useMessagesInternal = () => {
 			}
 		}
 
+		// if message removed is from history, update history messages
+		if (isHistoryMessage) {
+			if (historyMessages) {
+				setHistoryMessages(historyMessages.filter((m) => m.id !== messageId));
+			}
+			return message;
+		}
+
 		setSyncedMessages(prev =>
 			prev.filter(m => m.id !== messageId)
 		);
@@ -292,7 +311,7 @@ export const useMessagesInternal = () => {
 		setUnreadCount((prev) => Math.max(prev - 1, 0));
 		return message;
 	}, [dispatchRcbEvent, settings.event?.rcbRemoveMessage, handlePostMessagesUpdate,
-		syncedMessagesRef, setUnreadCount
+		syncedMessagesRef, setUnreadCount, getHistoryMessages, setHistoryMessages
 	]);
 
 	/**
