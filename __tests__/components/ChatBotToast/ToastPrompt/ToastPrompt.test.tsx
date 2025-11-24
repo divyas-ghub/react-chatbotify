@@ -61,7 +61,7 @@ describe("ToastPrompt Component", () => {
 		expect(toastElement).toBeInTheDocument();
 
 		// Check if the correct style is applied
-		expect(toastElement).toHaveStyle("background-color: white");
+		expect(toastElement).toHaveStyle("background-color: rgb(255, 255, 255)");
 	});
 
 	it("dismisses toast on click when dismissOnClick is true", () => {
@@ -123,7 +123,7 @@ describe("ToastPrompt Component", () => {
 		fireEvent.mouseLeave(toastElement);
 
 		// Assert that the default style is reapplied
-		expect(toastElement).toHaveStyle("background-color: white");
+		expect(toastElement).toHaveStyle("background-color: rgb(255, 255, 255)");
 	});
 
 	it("renders with correct styles from settings", () => {
@@ -146,8 +146,8 @@ describe("ToastPrompt Component", () => {
 		const toastElement = screen.getByText("Test Toast Message");
 
 		// Check styles applied
-		expect(toastElement).toHaveStyle("color: black"); // Default style
-		expect(toastElement).toHaveStyle("background-color: white"); // Default style
+		expect(toastElement).toHaveStyle("color: rgb(0, 0, 0)"); // Default style
+		expect(toastElement).toHaveStyle("background-color: rgb(255, 255, 255)"); // Default style
 	});
 
 
@@ -196,7 +196,7 @@ describe("ToastPrompt Component", () => {
 		expect(toastElement).toBeInTheDocument();
     
 		// Ensure that default styles are applied, since primaryColor is undefined
-		expect(toastElement).toHaveStyle("background-color: white"); // Assuming this is the default style
+		expect(toastElement).toHaveStyle("background-color: rgb(255, 255, 255)"); // Assuming this is the default style
     
 		// Check that the border-color is not applied
 		const computedStyle = window.getComputedStyle(toastElement);

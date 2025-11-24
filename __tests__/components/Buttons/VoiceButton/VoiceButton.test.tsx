@@ -58,7 +58,7 @@ describe("VoiceButton Component", () => {
 		expect(button).toBeInTheDocument();
 
 		expect(icon).toHaveStyle("fill: #9aa0a6");
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIconDisabled})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIconDisabled}")`);
 	});
 
 	it("toggles voice state when clicked (initially off)", () => {
@@ -69,11 +69,11 @@ describe("VoiceButton Component", () => {
 		});
 		const icon = screen.getByTestId(voiceIconTestId);
 
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIconDisabled})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIconDisabled}")`);
 
 		fireEvent.mouseDown(button);
 
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIcon})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIcon}")`);
 	});
 
 	it("renders with voice toggled on initially and toggles to off when clicked", () => {
@@ -83,11 +83,11 @@ describe("VoiceButton Component", () => {
 			name: DefaultSettings.ariaLabel?.voiceButton,
 		});
 		const icon = screen.getByTestId(voiceIconTestId);
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIcon})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIcon}")`);
 
 		fireEvent.mouseDown(button);
 
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIconDisabled})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIconDisabled}")`);
 	});
 
 	it("toggles notification back to on after being toggled off", () => {
@@ -97,14 +97,14 @@ describe("VoiceButton Component", () => {
 			name: DefaultSettings.ariaLabel?.voiceButton,
 		});
 		const icon = screen.getByTestId(voiceIconTestId);
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIcon})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIcon}")`);
 
 		fireEvent.mouseDown(button);
 
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIconDisabled})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIconDisabled}")`);
 
 		fireEvent.mouseDown(button);
 
-		expect(icon.style.backgroundImage).toBe(`url(${voiceIcon})`);
+		expect(icon.style.backgroundImage).toBe(`url("${voiceIcon}")`);
 	});
 });

@@ -18,7 +18,7 @@ jest.mock("../../../src/context/StylesContext");
  */
 describe("ChatHistoryLineBreak Component", () => {
 	const mockText = DefaultSettings.chatHistory?.chatHistoryLineBreakText ?? "test break line";
-	const mockColor = DefaultStyles.chatHistoryLineBreakStyle?.color ?? "blue";
+	const mockColor = DefaultStyles.chatHistoryLineBreakStyle?.color ?? "rgb(0, 0, 255)";
 	
 	// Mock default settings and styles before each test
 	beforeEach(() => {

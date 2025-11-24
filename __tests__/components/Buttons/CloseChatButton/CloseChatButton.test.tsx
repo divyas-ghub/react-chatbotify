@@ -102,9 +102,9 @@ describe("CloseChatButton", () => {
 		const icon = screen.getByTestId("rcb-close-chat-icon");
 
 		// Assert that the button has the correct background color
-		expect(button).toHaveStyle("background-color: gray");
+		expect(button).toHaveStyle("background-color: rgb(128, 128, 128)");
 		// Assert that the icon has the correct color
-		expect(icon).toHaveStyle("color: red");
+		expect(icon).toHaveStyle("color: rgb(255, 0, 0)");
 		// Assert that the icon has correct fill
 		expect(icon).toHaveStyle("fill: #e8eaed");
 	});

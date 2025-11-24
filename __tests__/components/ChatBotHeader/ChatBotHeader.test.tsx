@@ -68,7 +68,7 @@ describe("ChatBotHeader Component", () => {
 		expect(headerContainer).toHaveClass("rcb-chat-header-container");
 		expect(headerContainer).toHaveStyle({
 			background: 'black',
-			color: 'white',
+			color: 'rgb(255, 255, 255)',
 		});
 
 		// check avatar icon and class
@@ -120,7 +120,7 @@ describe("ChatBotHeader Component", () => {
 		expect(headerContainer).toHaveClass("rcb-chat-header-container");
 		expect(headerContainer).toHaveStyle({
 			background: 'black',
-			color: 'white',
+			color: 'rgb(255, 255, 255)',
 		});
 
 		// get all header buttons

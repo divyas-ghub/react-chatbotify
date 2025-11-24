@@ -62,10 +62,10 @@ describe("BotTypingIndicator Component", () => {
 
 	describe("Custom Styles based on StylesContext", () => {
 		it("applies custom style to the indicator container", () => {
-			const styles = { rcbTypingIndicatorContainerStyle: { backgroundColor: "blue" } };
+			const styles = { rcbTypingIndicatorContainerStyle: { backgroundColor: "rgb(0, 0, 255)" } };
 			renderBotTypingIndicator(undefined, styles);
 			const container = document.querySelector(".rcb-typing-indicator");
-			expect(container).toHaveStyle("background-color: blue");
+			expect(container).toHaveStyle("background-color: rgb(0, 0, 255)");
 		});
 
 		it("applies custom style to each dot", () => {
