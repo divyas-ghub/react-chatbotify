@@ -43,10 +43,10 @@ const ChatBot = ({
 
 	// handles cases where any props are empty
 	const finalBotId = useMemo(() => id || "rcb-" + generateSecureUUID(), []);
-	const finalFlow = (!flow || Object.keys(flow).length === 0) ? WelcomeFlow : flow;
-	const finalSettings = !settings ? {} : settings;
-	const finalStyles = !styles ? {} : styles;
-	const finalPlugins = !plugins ? [] : plugins;
+	const finalFlow = useMemo(() => (!flow || Object.keys(flow).length === 0) ? WelcomeFlow : flow, [flow]);
+	const finalSettings = useMemo(() => (!settings ? {} : settings), [settings]);
+	const finalStyles = useMemo(() => (!styles ? {} : styles), [styles]);
+	const finalPlugins = useMemo(() => (!plugins ? [] : plugins), [plugins]);
 
 	// handles loading of chatbot only when config is loaded
 	const [configLoaded, setConfigLoaded] = useState<boolean>(false);
