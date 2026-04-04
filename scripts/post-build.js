@@ -46,3 +46,4 @@ const copyIndexDtsToCts = (src, dest) => {
 // run post build actions
 removeFiles(filesToRemove);
 copyIndexDtsToCts(indexDts, indexCts);
+console.info('Workflow is running');
