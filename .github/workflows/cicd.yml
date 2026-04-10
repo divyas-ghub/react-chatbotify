@@ -1,8 +1,0 @@
-name: test-cicd
-'on': push
-jobs:
-  cicd-job:
-    runs-on: ubuntu-latest
-    steps:
-    - name: first-step
-      run: echo "Hello World"
