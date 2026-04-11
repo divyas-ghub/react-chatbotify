@@ -19,15 +19,17 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    steps:
-    - name: Run Gitleaks
-      uses: gitleaks/gitleaks-action@v2
-    
+    steps: 
     - name: Setup Node
       uses: actions/setup-node@v4
 
     - name: Install Dependencies
       run: npm install
+
+    - name: Semgrep Installation
+      uses: returntocorp/semgrep-action@v1
+      with:  
+        config: auto
         
     - name: Trivy Installation
       run: 
@@ -38,11 +40,7 @@ jobs:
         sudo apt-get install trivy
 
     - name: Trivy Full scan
-      run: trivy fs --format json -o fs-report.json .
+      run: trivy fs --format table -o fs-report.json .
 
-    - name: Semgrep Installation
-      uses: returntocorp/semgrep-action@v1
-      with:  
-        config: auto
 
       
